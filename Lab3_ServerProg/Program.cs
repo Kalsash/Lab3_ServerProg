@@ -18,4 +18,15 @@ app.MapStaticAssets();
 app.MapRazorPages()
    .WithStaticAssets();
 
+
+// Обработчик для 404 ошибок
+app.UseStatusCodePages(context =>
+{
+    if (context.HttpContext.Response.StatusCode == StatusCodes.Status404NotFound)
+    {
+        context.HttpContext.Response.Redirect("/404");
+    }
+    return Task.CompletedTask;
+});
+
 app.Run();
