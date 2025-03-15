@@ -48,10 +48,10 @@ namespace Lab3_ServerProg.Pages
                 await smtpClient.SendMailAsync(mailMessage); 
             }
         }
-        public async Task<IActionResult> OnPostClosePopup()
+        public IActionResult OnPostClosePopup()
         {
             ShowSuccessPopup = false;
-            return Page(); 
+            return Page();
         }
 
         public void OnGet()
