@@ -20,25 +20,17 @@ namespace Lab3_ServerProg.Pages
         public bool ShowContactSuccess { get; private set; }
 
 
-        public async Task<IActionResult> OnPostSendAsync()
+        public async void OnPostSendAsync()
         {
             ModelState.Remove("Email");
-            if (!ModelState.IsValid)
-                return Page();
-
-            if (!ContactR.ContactEmail.EndsWith(".edu"))
+            if (ModelState.IsValid && ContactR.ContactEmail.EndsWith(".edu"))
             {
-                ModelState.AddModelError("ContactEmail", "Email must be from a .edu domain.");
-                return Page();
-            }
-            ShowContactSuccess = true;
-            // Save data to CSV
-            await CsvHelperService.SaveRecordAsync(ContactR);
-
-            return Page();
+                ShowContactSuccess = true;
+                await CsvHelperService.SaveRecordAsync(ContactR);
+            } 
         }
 
-        public async Task<IActionResult> OnPostSubscribeAsync()
+        public async void OnPostSubscribeAsync()
         {
             ModelState.Remove("ContactEmail");
             ModelState.Remove("Name");
@@ -47,11 +39,10 @@ namespace Lab3_ServerProg.Pages
             if (ModelState.IsValid)
             {
                 Log.Information("New subscription from {Email}", Subscribe.Email);
-                await SendEmailAsync(Subscribe.Email);
                 ShowSuccessPopup = true;
-                return Page();
+                await SendEmailAsync(Subscribe.Email);
             }
-            return Page();
+           
         }
 
         private async Task SendEmailAsync(string email)

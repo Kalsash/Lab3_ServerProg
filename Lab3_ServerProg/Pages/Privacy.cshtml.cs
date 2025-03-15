@@ -20,16 +20,14 @@ namespace Lab3_ServerProg.Pages
             _logger = logger;
         }
 
-        public async Task<IActionResult> OnPostSubscribeAsync()
+        public async void OnPostSubscribeAsync()
         {
             if (ModelState.IsValid)
             {
                 Log.Information("New subscription from {Email}", Subscribe.Email);
-                await SendEmailAsync(Subscribe.Email);
                 ShowSuccessPopup = true;
-                return Page();
+                await SendEmailAsync(Subscribe.Email);
             }
-            return Page();
         }
 
         private async Task SendEmailAsync(string email)
