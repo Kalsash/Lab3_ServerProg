@@ -19,6 +19,12 @@ namespace Lab3_ServerProg.Pages
 
         public bool ShowContactSuccess { get; private set; }
 
+        private readonly ICsvHelperService _csvHelperService;
+
+        public ContactModel(ICsvHelperService csvHelperService)
+        {
+            _csvHelperService = csvHelperService;
+        }
 
         public async void OnPostSendAsync()
         {
@@ -26,7 +32,7 @@ namespace Lab3_ServerProg.Pages
             if (ModelState.IsValid && ContactR.ContactEmail.EndsWith(".edu"))
             {
                 ShowContactSuccess = true;
-                await CsvHelperService.SaveRecordAsync(ContactR);
+                await _csvHelperService.SaveRecordAsync(ContactR);
             } 
         }
 

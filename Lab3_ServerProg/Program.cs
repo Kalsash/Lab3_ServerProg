@@ -1,16 +1,25 @@
+using Lab3_ServerProg;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 // Настройка Serilog
 Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Information()  // Поставил минимальный уровень логгирования
+    .MinimumLevel.Information()  // Поставил минимальный уровень логирования
     .WriteTo.Console()
     .WriteTo.File("logs/log.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
-builder.Host.UseSerilog(); //Serilog для логгирования
+builder.Host.UseSerilog(); //Serilog для логирования
 
 builder.Services.AddRazorPages();
+
+
+builder.Services.AddScoped<ICsvHelperService, CsvHelperService>();
+//builder.Services.AddTransient<ICsvHelperService, CsvHelperService>();
+//builder.Services.AddSingleton<ICsvHelperService, CsvHelperService>();
+
+
+
 
 var app = builder.Build();
 if (!app.Environment.IsDevelopment())

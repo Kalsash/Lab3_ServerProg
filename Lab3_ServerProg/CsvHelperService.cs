@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Lab3_ServerProg
 {
-    public static class CsvHelperService
+    public class CsvHelperService : ICsvHelperService
     {
         private const string CsvFilePath = "contacts.csv";
 
-        public static async Task SaveRecordAsync(ContactRecord record)
+        public async Task SaveRecordAsync(ContactRecord record)
         {
             var records = new List<ContactRecord> { record };
             using (var writer = new StreamWriter(CsvFilePath, true))
